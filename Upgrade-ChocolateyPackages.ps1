@@ -1,4 +1,4 @@
-foreach ($pkgline in (choco list --local | select-string -NotMatch "packages installed." | select-string -notmatch 'This is try' | select-string -NotMatch 'Maximum tries' | select-string -NotMatch 'Chocolatey v'))
+foreach ($pkgline in (choco list --local-only | select-string "^[a-zA-Z0-9\-]* [0-9\.]*$"))
 {
     $pkg = ($pkgline -split " ")[0]
     # Adobe Reader doesn't update, so avoiding it and also all patches that should NOT need updates
