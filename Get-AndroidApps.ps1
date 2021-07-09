@@ -15,7 +15,9 @@ function Get-DeviceList {
                 }
             }
         }
-        $result_device['name'] = $(adb -t $result_device['transport_id'] shell dumpsys bluetooth_manager | select-string "name: ") -replace '  name: ',''
+        foreach ($device_name in $(adb -t $result_device['transport_id'] shell dumpsys bluetooth_manager | select-string "  name: ") -replace '  name: ','') {
+            $result_device['name'] = $device_name
+        }
         $result += $result_device
     }
     return $result
